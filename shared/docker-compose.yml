@@ -1,0 +1,38 @@
+version: "2"
+services:
+  proxy:
+    image: jwilder/nginx-proxy
+    container_name: proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./certs:/etc/nginx/certs:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    restart: always
+    logging:
+      options:
+        max-size: 5m
+        max-file: "10"
+
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_general_ci
+      --max-allowed-packet=128M
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    restart: always
+    logging:
+      options:
+        max-size: 5m
+        max-file: "10"
+
+networks:
+  default:
+    external:
+      name: shared

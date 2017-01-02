@@ -1,0 +1,19 @@
+version: "2"
+services:
+  wordpress:
+    image: wordpress
+    environment:
+      VIRTUAL_HOST: wordpress.example.com
+      WORDPRESS_DB_PASSWORD: root
+    external_links:
+      - mysql
+    restart: always
+    logging:
+      options:
+        max-size: 5m
+        max-file: "10"
+
+networks:
+  default:
+    external:
+      name: shared

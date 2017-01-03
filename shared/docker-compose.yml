@@ -7,8 +7,8 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./certs:/etc/nginx/certs:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./certs:/etc/nginx/certs:ro
     restart: always
     logging:
       options:
